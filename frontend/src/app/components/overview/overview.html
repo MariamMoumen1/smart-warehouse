@@ -1,0 +1,33 @@
+﻿<div class="dashboard">
+  <h1>Smart Warehouse — Vue d'ensemble</h1>
+
+  <div *ngIf="loading">Chargement des données...</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <div class="cards" *ngIf="status">
+    <div class="card">
+      <h3>Niveau de stock</h3>
+      <p class="value">{{ status.niveau_stock }} / {{ status.capacite_max }}</p>
+    </div>
+    <div class="card">
+      <h3>Camions entrants</h3>
+      <p class="value">{{ status.camions_entrants }}</p>
+    </div>
+    <div class="card">
+      <h3>Camions en attente</h3>
+      <p class="value">{{ status.camions_en_attente }}</p>
+    </div>
+  </div>
+
+  <div class="alerts" *ngIf="status">
+    <h3>Alertes</h3>
+    <ul>
+      <li *ngFor="let alerte of status.alertes" [class]="alerte.type">{{ alerte.message }}</li>
+    </ul>
+  </div>
+
+  <div class="chart-section">
+    <h3>Historique du temps d'attente (12 dernières heures)</h3>
+    <canvas #historyCanvas></canvas>
+  </div>
+</div>

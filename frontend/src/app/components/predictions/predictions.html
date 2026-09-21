@@ -1,0 +1,66 @@
+﻿<div class="page">
+  <div class="prediction-panel">
+    <h1>Prédiction du temps d'attente</h1>
+    <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+    <div class="form-grid">
+      <label>Heure (0-23)<input type="number" [(ngModel)]="predictionForm.heure" min="0" max="23"></label>
+      <label>Jour semaine (0=Lundi)<input type="number" [(ngModel)]="predictionForm.jour_semaine" min="0" max="6"></label>
+      <label>Camions entrants<input type="number" [(ngModel)]="predictionForm.camions_entrants" min="0"></label>
+      <label>Niveau de stock<input type="number" [(ngModel)]="predictionForm.niveau_stock" min="0"></label>
+      <label>Température (°C)<input type="number" [(ngModel)]="predictionForm.temperature"></label>
+    </div>
+
+    <button (click)="runPrediction()" [disabled]="predicting">
+      {{ predicting ? 'Calcul en cours...' : 'Prédire le temps d\'attente' }}
+    </button>
+
+    <div class="result" *ngIf="predictedTime !== null && !predicting">
+      <div class="result-main">
+        Temps d'attente estimé : <strong>{{ predictedTime }} minutes</strong>
+      </div>
+      <span class="result-badge" [class]="getNiveauLabel(predictedTime).toLowerCase()">
+        Niveau : {{ getNiveauLabel(predictedTime) }}
+      </span>
+    </div>
+  </div>
+
+  <div class="history-panel">
+    <div class="history-header">
+      <h2>Historique des prédictions ({{ history.length }})</h2>
+    </div>
+
+    <div *ngIf="loadingHistory">Chargement de l'historique...</div>
+
+    <table *ngIf="!loadingHistory && history.length > 0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Heure</th>
+          <th>Jour</th>
+          <th>Camions</th>
+          <th>Stock</th>
+          <th>Temp.</th>
+          <th>Résultat</th>
+          <th>Niveau</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of history">
+          <td>{{ record.created_at | date:'dd/MM HH:mm' }}</td>
+          <td>{{ record.heure }}h</td>
+          <td>{{ jours[record.jour_semaine] }}</td>
+          <td>{{ record.camions_entrants }}</td>
+          <td>{{ record.niveau_stock }}</td>
+          <td>{{ record.temperature }}°C</td>
+          <td><strong>{{ record.resultat }} min</strong></td>
+          <td><span class="mini-badge" [class]="getNiveauLabel(record.resultat).toLowerCase()">{{ getNiveauLabel(record.resultat) }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loadingHistory && history.length === 0" class="empty">
+      Aucune prédiction effectuée pour le moment. Utilisez le formulaire ci-dessus.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+.trucks-section {
+  max-width: 1100px;
+  margin: 24px auto 0 auto;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e0e4ef;
+  border-radius: 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+h2 {
+  color: #16213e;
+  margin-top: 0;
+}
+
+.error {
+  background: #ffe5e5;
+  color: #c0392b;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.add-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  input, select {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  button {
+    background: #0f3460;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover { background: #16213e; }
+    &:disabled { background: #9ca3af; cursor: not-allowed; }
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eef0f5;
+    font-size: 14px;
+  }
+
+  th {
+    color: #6b7280;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+
+  &.en_attente { background: #fff8e1; color: #f57f17; }
+  &.en_cours { background: #e3f2fd; color: #1565c0; }
+  &.termine { background: #e8f5e9; color: #2e7d32; }
+}
+
+.actions button {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.btn-edit { background: #e3f2fd; color: #1565c0; }
+.btn-delete { background: #ffebee; color: #c62828; }
+.btn-save { background: #e8f5e9; color: #2e7d32; }
+.btn-cancel { background: #f0f0f0; color: #555; }
+
+.empty {
+  color: #9ca3af;
+  padding: 20px;
+  text-align: center;
+}
+.live-notice {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,25 @@
+﻿<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">SW</span>
+      <span class="logo-text">Smart Warehouse</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Dashboard</div>
+      <a class="nav-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Vue d'ensemble</a>
+      <a class="nav-item" routerLink="/predictions" routerLinkActive="active">Prédictions</a>
+      <div class="nav-section">Gestion</div>
+      <a class="nav-item" routerLink="/trucks" routerLinkActive="active">Camions</a>
+      <div class="nav-section">Rapports</div>
+      <button class="export-btn" (click)="exportPdf()" [disabled]="exportingPdf">
+        {{ exportingPdf ? 'Export...' : 'Exporter en PDF' }}
+      </button>
+      <button class="export-btn" (click)="exportExcel()" [disabled]="exportingExcel">
+        {{ exportingExcel ? 'Export...' : 'Exporter en Excel' }}
+      </button>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

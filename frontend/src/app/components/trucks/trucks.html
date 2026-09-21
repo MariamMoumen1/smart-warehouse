@@ -1,0 +1,64 @@
+﻿<div class="trucks-section">
+  <h2>Gestion des camions</h2>
+  <div class="live-notice" *ngIf="liveNotice">En direct : {{ liveNotice }}</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <div class="add-form">
+    <input type="text" placeholder="Plaque (ex: 12345-A-6)" [(ngModel)]="newTruck.plaque" name="plaque">
+    <select [(ngModel)]="newTruck.statut" name="statut">
+      <option value="en_attente">En attente</option>
+      <option value="en_cours">En cours</option>
+      <option value="termine">Termine</option>
+    </select>
+    <button (click)="addTruck()" [disabled]="submitting">
+      {{ submitting ? 'Ajout...' : 'Ajouter un camion' }}
+    </button>
+  </div>
+
+  <div *ngIf="loading">Chargement...</div>
+
+  <table *ngIf="!loading && trucks.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Plaque</th>
+        <th>Statut</th>
+        <th>Temps d attente</th>
+        <th>Cree le</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let truck of trucks">
+        <td>{{ truck.id }}</td>
+        <td>{{ truck.plaque }}</td>
+        <td>
+          <span *ngIf="editingId !== truck.id" [class]="'badge ' + truck.statut">
+            {{ truck.statut }}
+          </span>
+          <select *ngIf="editingId === truck.id" [(ngModel)]="editStatut" name="editStatut">
+            <option value="en_attente">En attente</option>
+            <option value="en_cours">En cours</option>
+            <option value="termine">Termine</option>
+          </select>
+        </td>
+        <td>{{ truck.temps_attente_min !== null ? truck.temps_attente_min : '-' }}</td>
+        <td>{{ truck.created_at | date:'short' }}</td>
+        <td class="actions">
+          <ng-container *ngIf="editingId !== truck.id">
+            <button class="btn-edit" (click)="startEdit(truck)">Modifier</button>
+            <button class="btn-delete" (click)="deleteTruck(truck.id)">Supprimer</button>
+          </ng-container>
+          <ng-container *ngIf="editingId === truck.id">
+            <button class="btn-save" (click)="saveEdit(truck)">Enregistrer</button>
+            <button class="btn-cancel" (click)="cancelEdit()">Annuler</button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && trucks.length === 0" class="empty">
+    Aucun camion enregistre pour le moment.
+  </div>
+</div>
