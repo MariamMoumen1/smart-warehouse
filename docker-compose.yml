@@ -1,12 +1,31 @@
 version: "3.9"
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: smart_warehouse
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   backend:
     build: ./backend
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/smart_warehouse
+
   frontend:
     build: ./frontend
     ports:
       - "4200:80"
     depends_on:
       - backend
+
+volumes:
+  pgdata:
